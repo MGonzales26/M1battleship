@@ -8,7 +8,7 @@ class Cell
   end
 
   def empty?
-    @empty = @ship == nil
+    @empty = @ship.nil? #thanks aiden
   end
 
   def place_ship(ship_name)
@@ -29,9 +29,9 @@ class Cell
   def render
     #if (!empty, fired upon and sunk)
     #elsif (empty! and fired upon)
-    if empty? == true && fired_upon? == true
+    if empty? && fired_upon?
       "M"
-    elsif empty? == true && fired_upon? == false
+    elsif empty? && !fired_upon?
       "."
     end
   end
