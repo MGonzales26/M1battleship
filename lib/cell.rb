@@ -18,4 +18,21 @@ class Cell
   def fired_upon?
     @fired_upon
   end
+
+  def fire_upon
+    if ship != nil
+      ship.hit
+    end
+    @fired_upon = true
+  end
+
+  def render
+    #if (!empty, fired upon and sunk)
+    #elsif (empty! and fired upon)
+    if empty? == true && fired_upon? == true
+      "M"
+    elsif empty? == true && fired_upon? == false
+      "."
+    end
+  end
 end
