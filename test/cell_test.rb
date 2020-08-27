@@ -64,14 +64,6 @@ class CellTest < Minitest::Test
     assert_equal false, cell.fired_upon?
   end
 
-  def test_it_can_fire_upon
-    skip
-    cell = Cell.new("B4")
-    cruiser = Ship.new("Cruiser", 3)
-
-    cell.fired_upon
-  end
-
   def test_fire_upon_damages_ship
     # skip
     cell = Cell.new("B4")
@@ -114,14 +106,10 @@ class CellTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
 
     assert_equal ".", cell_1.render
-  end
-
-  def test_can_render_period_when_empty_and_not_fired_upon
-    # skip
-    cell_1 = Cell.new("B4")
-    cruiser = Ship.new("Cruiser", 3)
-
     refute_equal "M", cell_1.render
+    refute_equal "X", cell_1.render
+    refute_equal "H", cell_1.render
+    refute_equal "S", cell_1.render(true)
   end
 
   def test_can_miss_when_empty_and_fired_upon
@@ -132,14 +120,53 @@ class CellTest < Minitest::Test
 
     assert_equal "M", cell_1.render
     refute_equal ".", cell_1.render
+    refute_equal "X", cell_1.render
+    refute_equal "H", cell_1.render
+    refute_equal "S", cell_1.render(true)
   end
 
   def test_can_hit_when_fired_upon_and_ship_present
     cell_2 = Cell.new("C3")
     cruiser = Ship.new("Cruiser", 3)
 
-    cell_1.fire_upon
+    cell_2.place_ship(cruiser)
+    cell_2.fire_upon
+
+    assert_equal "H", cell_2.render
+    refute_equal "M", cell_2.render
+    refute_equal ".", cell_2.render
+    refute_equal "X", cell_2.render
+    refute_equal "S", cell_2.render(true)
+  end
+
+  def test_not_empty_and_is_fired_upon_and_is_sunk
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+
+    cell_2.place_ship(cruiser)
+    cell_2.fire_upon
+    cell_2.fire_upon
+    cell_2.fire_upon
 
 
+    assert_equal "X", cell_2.render
+    refute_equal "H", cell_2.render
+    refute_equal "M", cell_2.render
+    refute_equal ".", cell_2.render
+    refute_equal "S", cell_2.render(true)
+  end
+
+  def test_optional_ship_visability
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+
+    cell_2.place_ship(cruiser)
+
+
+    assert_equal "S", cell_2.render(true)
+    refute_equal "X", cell_2.render
+    refute_equal "H", cell_2.render
+    refute_equal "M", cell_2.render
+    refute_equal ".", cell_2.render
   end
 end
