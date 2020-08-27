@@ -26,10 +26,14 @@ class Cell
     @fired_upon = true
   end
 
-  def render
-    #if (!empty, fired upon and sunk)
-    #elsif (empty! and fired upon)
-    if empty? && fired_upon?
+  def render(shown=false)
+    if shown == true && !empty? && !fired_upon?
+      "S"
+    elsif !empty? && fired_upon? && ship.sunk?
+      "X"
+    elsif !empty? && fired_upon?
+      "H"
+    elsif empty? && fired_upon?
       "M"
     elsif empty? && !fired_upon?
       "."
