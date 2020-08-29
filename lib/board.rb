@@ -1,7 +1,7 @@
 class Board
-  attr_reader :cells, :rows, :columns
+  attr_reader :rows, :cells, :columns
   def initialize
-    @cells = {}
+    @cells = make_cells
     @rows = rows
     @columns = columns
   end
@@ -19,11 +19,12 @@ class Board
     coordinates.flatten
   end
 
-  def cells
+  def make_cells
+    new_cells = {}
     make_board_size.map do |key|
-      @cells[key] = Cell.new(key)
+      new_cells[key] = Cell.new(key)
     end
-    @cells
+    new_cells
   end
 
   def valid_coordinate?(alphanumeric)
@@ -94,5 +95,12 @@ class Board
 
   def valid_letters?(spots)
     consecutive_letters?(spots) && all_numbers_same?(spots)
+  end
+
+  def place(ship_type, spots)
+    something = spots.map do |spot|
+      @cells[spot].place_ship(ship_type)
+    end
+      something
   end
 end
