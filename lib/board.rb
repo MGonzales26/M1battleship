@@ -31,10 +31,10 @@ class Board
   end
 
   def valid_placement?(ship_type, spots)
-    if coordinate_equal?(ship_type, spots) && ((consecutive_numbers?(spots) && all_letters_same?(spots)) || (consecutive_letters?(spots) && all_numbers_same?(spots)))
+    if coordinate_equal?(ship_type, spots) && (valid_numbers?(spots) || valid_letters?(spots))
       return true
-    elsif !all_letters_same?(spots) && !all_numbers_same?(spots)
-      return false
+    # elsif !all_letters_same?(spots) && !all_numbers_same?(spots)
+    #   return false
     else
       return false
     end
@@ -77,11 +77,22 @@ class Board
   def consecutive_letters?(spots)
     set = make_letters_ord_numbers.each_cons(spots.length).to_a
     check = find_letters(spots).each_cons(spots.length).to_a
+    set.any? do |group_element|
+      group_element == check.flatten
+    end
   end
 
   def make_letters_ord_numbers
     @columns.map do |letter|
       letter.ord
     end
+  end
+
+  def valid_numbers?(spots)
+    consecutive_numbers?(spots) && all_letters_same?(spots)
+  end
+
+  def valid_letters?(spots)
+    consecutive_letters?(spots) && all_numbers_same?(spots)
   end
 end
