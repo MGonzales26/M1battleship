@@ -41,4 +41,53 @@ class BoardTest < Minitest::Test
       assert_equal 16, board.cells.values.uniq.length
       assert_equal 16, board.cells.keys.uniq.length
   end
+
+  def test_it_is_a_valid_coordinate
+    board = Board.new
+
+    board.cells
+
+    assert_equal true, board.valid_coordinate?("A1")
+  end
+
+  def test_is_not_valid_and_outside_board
+    board = Board.new
+
+    board.cells
+
+    assert_equal false, board.valid_coordinate?("Q1")
+    assert_equal false, board.valid_coordinate?("A6")
+  end
+
+  def test_is_not_a_valid_placement_lengths_not_equal
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cells
+
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2"])
+    assert_equal false, board.valid_placement?(submarine, ["A1", "A2","A3"])
+  end
+
+  def test_is_a_valid_placement
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cells
+
+    assert_equal true, board.valid_placement?(cruiser, ["A1", "A2","A3"])
+    assert_equal true, board.valid_placement?(submarine, ["A1", "A2"])
+  end
+
+  def test_coordinates_are_not_consecutive_numbers
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    board.cells
+
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "A2","A4"])
+  end
 end
