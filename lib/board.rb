@@ -95,4 +95,15 @@ class Board
   def valid_letters?(spots)
     consecutive_letters?(spots) && all_numbers_same?(spots)
   end
+
+  def place(ship_type, spots)
+    @empty = false
+    @ship = ship_type
+    # find @cells that == spots
+    # @cells == spots << ship_type
+    require 'pry' ; binding.binding.pry
+    @cells.map do |key, cell|
+      if cells[key] ==
+  end
+
 end
