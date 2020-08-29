@@ -168,4 +168,20 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_letters?(["D2", "D3", "D4"])
     assert_equal true, board.valid_letters?(["B4", "C4", "D4"])
   end
+
+  def test_place_method
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    cell_1 = board.cells["A1"]
+    cell_2 = board.cells["A2"]
+    cell_3 = board.cells["A3"]
+
+    assert_equal cruiser, cell_1.ship
+    assert_equal cruiser, cell_2.ship
+    assert_equal cruiser, cell_3.ship
+  end
+
 end
