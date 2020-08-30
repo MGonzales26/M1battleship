@@ -32,13 +32,25 @@ class Board
   end
 
   def valid_placement?(ship_type, spots)
-    if coordinate_equal?(ship_type, spots) && (valid_numbers?(spots) || valid_letters?(spots))
+    if overlapping?(spots) == true
+      return false
+    elsif coordinate_equal?(ship_type, spots) && (valid_numbers?(spots) || valid_letters?(spots))
       return true
     # elsif !all_letters_same?(spots) && !all_numbers_same?(spots)
     #   return false
     else
       return false
     end
+  end
+
+  def overlapping?(spots) #WE WANT THIS TO BE FALSE
+    answer = spots.all? do |spot|
+      @cells[spot].empty?
+    end
+    !answer
+    # require 'pry';binding.pry
+    # @cells.
+    # @cells[coordinate].empty? == @cells[coordinate].ship.empty
   end
 
   def all_letters_same?(spots)
@@ -100,7 +112,16 @@ class Board
   def place(ship_type, spots)
     something = spots.map do |spot|
       @cells[spot].place_ship(ship_type)
+      # @cells[spot].empty = !(@cells[spot].empty)
     end
       something
+  end
+
+  def render(visible=false)
+    " 1 2 3 4 \n" +
+    "A #{@cells["A1"].render(shown=false)} #{@cells["A2"].render(shown=false)} #{@cells["A3"].render(shown=false)} #{@cells["A4"].render(shown=false)} \n" +
+    "B #{@cells["B1"].render(shown=false)} #{@cells["B2"].render(shown=false)} #{@cells["B3"].render(shown=false)} #{@cells["B4"].render(shown=false)} \n" +
+    "C #{@cells["C1"].render(shown=false)} #{@cells["C2"].render(shown=false)} #{@cells["C3"].render(shown=false)} #{@cells["C4"].render(shown=false)} \n" +
+    "D #{@cells["D1"].render(shown=false)} #{@cells["D2"].render(shown=false)} #{@cells["D3"].render(shown=false)} #{@cells["D4"].render(shown=false)} \n"
   end
 end
