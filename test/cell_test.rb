@@ -54,7 +54,7 @@ class CellTest < Minitest::Test
 
     assert_equal "B4", cell.coordinate
     assert_equal nil, cell.ship
-    assert_equal true, cell.empty
+    assert_equal true, cell.empty?
   end
 
   def test_it_begins_not_fired_upon
