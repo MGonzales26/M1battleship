@@ -27,7 +27,8 @@ class Cell
   end
 
   def render(visible=false)
-    if visible = true && !empty? && !fired_upon?
+    # require 'pry';binding.pry
+    if !empty? && !fired_upon? && visible == true
       "S"
     elsif !empty? && ship.sunk? #fired_upon? &&
       "X"
@@ -35,7 +36,7 @@ class Cell
       "H"
     elsif empty? && fired_upon?
       "M"
-    else  #if empty? && !fired_upon?
+    else  #if empty? || !fired_upon?
       "."
     end
   end
