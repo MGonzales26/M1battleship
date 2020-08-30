@@ -228,18 +228,19 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_placement?(submarine, ["D2", "D3"])
   end
 
-  def test_it_can_render_the_current_board_to_screen
+  def test_it_can_render_the_current_board
+    # skip
+    board = Board.new
+
+    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+  end
+  def test_it_can_render_a_board_with_a_ship
     # skip
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
-    # board.place(cruiser, ["D1", "D2", "D3"])
+    board.place(cruiser, ["D1", "D2", "D3"])
 
-    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
-  end
-  def test_render
-    skip
-    board = Board.new
-    puts board.render
+    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD S S S . \n", board.render(true)
   end
 
 end
