@@ -114,7 +114,14 @@ class Board
       @cells[spot].place_ship(ship_type)
       # @cells[spot].empty = !(@cells[spot].empty)
     end
-
       something
+  end
+
+  def render(visible=false)
+    " 1 2 3 4 \n" +
+    "A #{@cells["A1"].render(shown=false)} #{@cells["A2"].render(shown=false)} #{@cells["A3"].render(shown=false)} #{@cells["A4"].render(shown=false)} \n" +
+    "B #{@cells["B1"].render(shown=false)} #{@cells["B2"].render(shown=false)} #{@cells["B3"].render(shown=false)} #{@cells["B4"].render(shown=false)} \n" +
+    "C #{@cells["C1"].render(shown=false)} #{@cells["C2"].render(shown=false)} #{@cells["C3"].render(shown=false)} #{@cells["C4"].render(shown=false)} \n" +
+    "D #{@cells["D1"].render(shown=false)} #{@cells["D2"].render(shown=false)} #{@cells["D3"].render(shown=false)} #{@cells["D4"].render(shown=false)} \n"
   end
 end
