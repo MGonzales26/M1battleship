@@ -3,11 +3,11 @@ class Cell
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = nil
-    # @empty = true
+    # @empty = empty?
     @fired_upon = false
   end
 
-  def empty?
+  def empty? #true if there is no ship
     @ship.nil? #thanks aiden
   end
 
@@ -26,16 +26,16 @@ class Cell
     @fired_upon = true
   end
 
-  def render(shown=false)
-    if shown == true && !empty? && !fired_upon?
+  def render(visible=false)
+    if visible = true && !empty? && !fired_upon?
       "S"
-    elsif !empty? && fired_upon? && ship.sunk?
+    elsif !empty? && ship.sunk? #fired_upon? &&
       "X"
     elsif !empty? && fired_upon?
       "H"
     elsif empty? && fired_upon?
       "M"
-    elsif empty? && !fired_upon?
+    else  #if empty? && !fired_upon?
       "."
     end
   end
