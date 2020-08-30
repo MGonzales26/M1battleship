@@ -9,11 +9,12 @@ class Computer
   def place_cruiser
     loop do
       cruiser_spots = []
-      until cruiser_spots.length == crusier.length do
-        cruiser.spots << board.cells.keys.sample
+      until cruiser_spots.length == cruiser.length do
+        cruiser_spots << board.cells.keys.sample
       end
-      if board.valid_placement(cruiser, cruiser_spots)
+      if board.valid_placement?(cruiser, cruiser_spots)
         board.place(cruiser, cruiser_spots)
+        # require 'pry';binding.pry
         break
       end
     end
@@ -25,7 +26,7 @@ class Computer
       until submarine_spots.length == submarine.length do
         submarine.spots << board.cells.keys.sample
       end
-      if board.valid_placement(submarine, submarine_spots)
+      if board.valid_placement?(submarine, submarine_spots)
         board.place(submarine, submarine_spots)
         break
       end

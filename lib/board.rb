@@ -1,7 +1,7 @@
 class Board
-  attr_reader :cells, :rows, :columns
+  attr_reader :rows, :cells, :columns
   def initialize
-    @cells = {}
+    @cells = make_cells
     @rows = rows
     @columns = columns
   end
@@ -19,11 +19,12 @@ class Board
     coordinates.flatten
   end
 
-  def cells
+  def make_cells
+    new_cells = {}
     make_board_size.map do |key|
-      @cells[key] = Cell.new(key)
+      new_cells[key] = Cell.new(key)
     end
-    @cells
+    new_cells
   end
 
   def valid_coordinate?(alphanumeric)
@@ -31,13 +32,25 @@ class Board
   end
 
   def valid_placement?(ship_type, spots)
-    if coordinate_equal?(ship_type, spots) && (valid_numbers?(spots) || valid_letters?(spots))
+    if overlapping?(spots) == true
+      return false
+    elsif coordinate_equal?(ship_type, spots) && (valid_numbers?(spots) || valid_letters?(spots))
       return true
     # elsif !all_letters_same?(spots) && !all_numbers_same?(spots)
     #   return false
     else
       return false
     end
+  end
+
+  def overlapping?(spots) #WE WANT THIS TO BE FALSE
+    answer = spots.all? do |spot|
+      @cells[spot].empty?
+    end
+    !answer
+    # require 'pry';binding.pry
+    # @cells.
+    # @cells[coordinate].empty? == @cells[coordinate].ship.empty
   end
 
   def all_letters_same?(spots)
@@ -94,5 +107,20 @@ class Board
 
   def valid_letters?(spots)
     consecutive_letters?(spots) && all_numbers_same?(spots)
+  end
+
+  def place(ship_type, spots)
+    something = spots.map do |spot|
+      @cells[spot].place_ship(ship_type)
+    end
+      something
+  end
+
+  def render(visible=false)
+    " 1 2 3 4 \n" +
+    "A #{@cells["A1"].render(visible)} #{@cells["A2"].render(visible)} #{@cells["A3"].render(visible)} #{@cells["A4"].render(visible)} \n" +
+    "B #{@cells["B1"].render(visible)} #{@cells["B2"].render(visible)} #{@cells["B3"].render(visible)} #{@cells["B4"].render(visible)} \n" +
+    "C #{@cells["C1"].render(visible)} #{@cells["C2"].render(visible)} #{@cells["C3"].render(visible)} #{@cells["C4"].render(visible)} \n" +
+    "D #{@cells["D1"].render(visible)} #{@cells["D2"].render(visible)} #{@cells["D3"].render(visible)} #{@cells["D4"].render(visible)} \n"
   end
 end
