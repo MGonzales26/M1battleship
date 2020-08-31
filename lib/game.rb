@@ -52,13 +52,21 @@ class Game
 
   def turn
     #loop do
+    #3.times do
       display_boards
       user_shot
       display_boards
       computer_shot
       display_boards
-    #player choosing coordinates
-    #computer choosing coordinates
+      user_shot
+      display_boards
+      computer_shot
+      display_boards
+      user_shot
+      display_boards
+      computer_shot
+      display_boards
+    #end
     #reporting results of players shot
     #reporting results of computers shot
   end
@@ -75,24 +83,36 @@ class Game
     puts "Enter the coordinate for your shot: "
     print "> "
     loop do
-      shot = gets.chomp.upcase
-        if computer.board.valid_coordinate?(shot) && !(computer.board.cells[shot].fired_upon?)
-          computer.board.cells[shot].fire_upon
-          break
-        else
-          puts "Please enter a valid coordinate."
-          print "> "
-        end
+      user_shot = gets.chomp.upcase
+      if computer.board.valid_coordinate?(user_shot) && !(computer.board.cells[user_shot].fired_upon?)
+        computer.board.cells[user_shot].fire_upon
+        puts "Your shot #{user_shot} was a #{shot_type(user_shot)}"
+        break
+      else
+        puts "Please enter a valid coordinate."
+        print "> "
+      end
     end
   end
 
   def computer_shot
     loop do
-      shot = user.board.cells.keys.sample
-      if user.board.valid_coordinate?(shot) && !(user.board.cells[shot].fired_upon?)
-        user.board.cells[shot].fire_upon
+      computer_shot = user.board.cells.keys.sample
+      if user.board.valid_coordinate?(computer_shot) && !(user.board.cells[computer_shot].fired_upon?)
+        user.board.cells[computer_shot].fire_upon
+        puts "My shot #{computer_shot} was a #{shot_type(computer_shot)}"
         break
       end
+    end
+  end
+
+  def shot_type(shot)
+    if computer.board.cells[shot].render == "H" || user.board.cells[shot].render == "H"
+      "hit."
+    elsif computer.board.cells[shot].render == "M" || user.board.cells[shot].render == "M"
+      "miss."
+    elsif computer.board.cells[shot].render == "X" || user.board.cells[shot].render == "X"
+      "masterful shot. You sunk the ship!"
     end
   end
 end
