@@ -24,7 +24,7 @@ class Computer
     loop do
       submarine_spots = []
       until submarine_spots.length == submarine.length do
-        submarine.spots << board.cells.keys.sample
+        submarine_spots << board.cells.keys.sample
       end
       if board.valid_placement?(submarine, submarine_spots)
         board.place(submarine, submarine_spots)
