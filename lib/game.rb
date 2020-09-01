@@ -1,5 +1,5 @@
 class Game
-  attr_reader :computer, :user
+  attr_reader :computer, :user, :user_ship_count, :computer_ship_count
   def initialize
     @computer = Computer.new
     @user = User.new
@@ -50,31 +50,34 @@ class Game
       display_boards
       user_shot
       computer_shot
-      evaluate_game
+      require 'pry': binding.pry
+      #evaluate_game
     end
   end
 
 
   def display_boards
     puts "=============COMPUTER BOARD============="
-    puts computer.board.render #(true)
+    puts computer.board.render(true)
     puts "==============PLAYER BOARD=============="
     puts user.board.render(true)
   end
 
-  def user_shot
+  def user_shot #user_turn
     puts "Enter the coordinate for your shot: "
     print "> "
     loop do
       user_shot = gets.chomp.upcase
+      #potential_user_inputs(user_shot)
       if computer.board.valid_coordinate?(user_shot) && !(computer.board.cells[user_shot].fired_upon?)
         computer.board.cells[user_shot].fire_upon
         puts "Your shot #{user_shot} was a #{shot_type(user_shot)}"
-        if shot_type(user_shot) == "masterful shot. You sunk the ship!"
-          @computer_ship_count -= 1
-        end
+        #computer_sunk
+        #  if shot_type(user_shot) == "masterful shot. You sunk the ship!"
+        #   @computer_ship_count -= 1
+        #  end
         break
-      elsif computer.board.valid_coordinate?(user_shot) && computer.board.cells[user_shot].fired_upon? 
+      elsif computer.board.valid_coordinate?(user_shot) && computer.board.cells[user_shot].fired_upon?
         puts "You've already fired on that coordinate. Please try again."
       else
         puts "Please enter a valid coordinate."
@@ -83,15 +86,16 @@ class Game
     end
   end
 
-  def computer_shot
+  def computer_shot #computer_turn
     loop do
       computer_shot = user.board.cells.keys.sample
+      #potential_user_inputs(computer_shot)
       if user.board.valid_coordinate?(computer_shot) && !(user.board.cells[computer_shot].fired_upon?)
         user.board.cells[computer_shot].fire_upon
         puts "My shot #{computer_shot} was a #{shot_type(computer_shot)}"
-        if shot_type(computer_shot) == "masterful shot. You sunk the ship!"
-          @user_ship_count -= 1
-        end
+        #if shot_type(computer_shot) == "masterful shot. You sunk the ship!"
+        #  @user_ship_count -= 1
+        #end
         break
       end
     end
@@ -100,34 +104,64 @@ class Game
   def shot_type(shot)
     if computer.board.cells[shot].render == "H" || user.board.cells[shot].render == "H"
       "hit."
+    elsif computer.board.cells[shot].render == "X"
+      @computer_ship_count -= 1
+      # require 'pry';binding.pry
+      "masterful shot. You sunk the ship!"
+    elsif user.board.cells[shot].render == "X"
+      @user_ship_count -= 1
+      # require 'pry';binding.pry
+      "masterful shot. You sunk the ship!"
     elsif computer.board.cells[shot].render == "M" || user.board.cells[shot].render == "M"
       "miss."
-    elsif computer.board.cells[shot].render == "X" || user.board.cells[shot].render == "X"
-       "masterful shot. You sunk the ship!"
     end
   end
 
-  def computer_count_empty?
-    @computer_ship_count.zero?
-  end
-
-  def user_count_empty?
-    @user_ship_count.zero?
-  end
+  # def computer_count_empty?
+  #   @computer_ship_count.zero?
+  # end
+  #
+  # def user_count_empty?
+  #   @user_ship_count.zero?
+  # end
 
   def evaluate_game
-    if user_count_empty? || computer_count_empty?
+    if @user_ship_count == 0 || @computer_ship_count == 0
       end_game
     end
   end
 
   def end_game
-    if @user_ship_count.zero?
+    display_boards
+    if @user_ship_count == 0
       puts "I win. Better luck, next time!!"
       run_game
-    elsif @computer_ship_count.zero?
+    elsif @computer_ship_count == 0
       puts "You won! You bested me on my own turf!"
       run_game
     end
+  end
+
+  #def computer_sunk?
+  #  if shot_type(user_shot) == "masterful shot. You sunk the ship!"
+  #    @computer_ship_count -= 1
+  #  end
+
+  #end
+
+  #def user_sunk?
+  #  if shot_type(computer_shot) == "masterful shot. You sunk the ship!"
+  #    @user_ship_count -= 1
+  #  end
+  #end
+
+  def good_bye
+    "We hate to see you go!"
+  end
+
+  def potential_user_inputs(input)
+    end_the_game = {"Q" => good_bye, "quit" => good_bye, "Quit" => good_bye}
+    end_the_game[input]
+    good_bye
   end
 end
