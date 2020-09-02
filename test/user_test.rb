@@ -15,16 +15,20 @@ class UserTest < Minitest::Test
 
   def test_it_can_place_a_cruiser
     # skip
-    user = User.new
+    cells = []
     board = Board.new
+    cell_1 = Cell.new("C1")
+    cells << cell_1
+    cell_2 = Cell.new("C2")
+    cells << cell_2
+    cell_3 = Cell.new("C3")
+    cells << cell_3
+    user = User.new
     cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
-    user.place_cruiser
-    cell_1 = board.cells["C1"]
-    cell_2 = board.cells["C2"]
-    cell_3 = board.cells["C3"]
-
-    assert_equal cruiser, cell_1.ship
+    assert_equal true, user.board.valid_placement?(cruiser, ["C1","C2","C3"])
+    refute_equal false, user.board.valid_placement?(submarine, ["C1","C2"])
   end
 
   def test_it_can_place_a_submarine
