@@ -40,12 +40,11 @@ class Turn
       else
         puts "Please enter a valid coordinate."
         print "> "
-        # user_shot
       end
     end
   end
 
-  def computer_shot #computer_turn
+  def computer_shot
     loop do
       computer_shot = user.board.cells.keys.sample
       if @user.board.valid_coordinate?(computer_shot) && !(@user.board.cells[computer_shot].fired_upon?)
@@ -60,38 +59,23 @@ class Turn
     if @computer.board.cells[shot].render == "H" || @user.board.cells[shot].render == "H"
       "hit."
     elsif @computer.board.cells[shot].render == "X"
-      # require 'pry';binding.pry
-      @computer.computer_ship_count -= 1
       "masterful shot. You sunk the ship!"
     elsif user.board.cells[shot].render == "X"
-      @user.user_ship_count -= 1
       "masterful shot. The ship is sunk!"
     elsif @computer.board.cells[shot].render == "M" || @user.board.cells[shot].render == "M"
       "miss."
     end
   end
 
-  # def evaluate_game
-  #   if @user_ship_count == 0 || @computer_ship_count == 0
-  #     end_game
-  #   end
-  # end
-  #
-  # def end_game
-  #   display_boards
-  #   if @user_ship_count == 0
-  #     puts "I win. Better luck, next time!!"
-  #     puts "Would you like to play agian?"
-  #     response = gets.chomp.upcase
-  #     abort if response == "Q"
-  #     game.main_menu if response == "P"
-  #   elsif @computer_ship_count == 0
-  #     puts "You won! You bested me on my own turf!"
-  #     puts "Would you like to play again?"
-  #     puts "'P' to play again or 'Q' to quit"
-  #     response = gets.chomp.upcase
-  #     abort if response == "Q"
-  #     game.main_menu if response == "P"
-  #   end
-  # end
+  def evaluate_computer_ships
+    if @computer.cruiser.sunk && @computer.submarine.sunk
+      @computer.ship_count = 0
+    end
+  end
+
+  def evaluate_user_ships
+    if @user.cruiser.sunk && @user.submarine.sunk
+      @user.ship_count = 0
+    end
+  end
 end

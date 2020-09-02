@@ -1,15 +1,15 @@
 class User
   attr_reader :board, :cruiser, :submarine
-  attr_accessor :user_ship_count
+  attr_accessor :ship_count
   def initialize
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    @user_ship_count = 2
+    @ship_count = 2
   end
 
   def place_cruiser
-    puts board.render
+    puts board.render(true)
     puts "Enter the squares for the Cruiser (3 spaces): "
     print "> "
     loop do
