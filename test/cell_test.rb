@@ -167,6 +167,6 @@ class CellTest < Minitest::Test
     refute_equal "X", cell_2.render
     refute_equal "H", cell_2.render
     refute_equal "M", cell_2.render
-    refute_equal ".", cell_2.render
+    assert_equal ".", cell_2.render
   end
 end

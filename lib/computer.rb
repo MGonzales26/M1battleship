@@ -1,9 +1,11 @@
 class Computer
   attr_reader :board, :cruiser, :submarine
+  attr_accessor :ship_count
   def initialize
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @ship_count = 2
   end
 
   def place_cruiser
@@ -14,7 +16,6 @@ class Computer
       end
       if board.valid_placement?(cruiser, cruiser_spots)
         board.place(cruiser, cruiser_spots)
-        # require 'pry';binding.pry
         break
       end
     end
