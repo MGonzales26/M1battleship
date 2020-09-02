@@ -14,31 +14,40 @@ class ComputerTest < Minitest::Test
     assert_instance_of Computer, computer
   end
 
-#   def test_it_can_place_a_cruiser
-#     # skip
-#     board = Board.new
-#     computer = Computer.new
-#     cruiser = Ship.new("Cruiser", 3)
-#
-#     computer.place_cruiser
-#     # cell_count = board.cells.values.count do |cell|
-#       # require 'pry';binding.pry
-#       # !(board.cells[cell].ship.nil?)
-#     # end
-# #ship is not nil
-#     # assert_equal 3, cell_count
-#     assert_equal true, board.valid_placement?(cruiser, cruiser_spots)
-#   end
-#
-#   def test_it_can_place_a_submarine
-#     skip
-#     board = Board.new
-#     computer = Computer.new
-#     submarine = Submarine("Submarine", 2)
-#
-#     computer.place_cruiser
-#
-#     assert_equal
-#   end
+  def test_it_can_place_a_cruiser
+    # skip
+    cells = []
+    board = Board.new
+    cell_1 = Cell.new("C1")
+    cells << cell_1
+    cell_2 = Cell.new("C2")
+    cells << cell_2
+    cell_3 = Cell.new("C3")
+    cells << cell_3
+    computer = Computer.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
 
+    assert_equal true, board.valid_placement?(cruiser, ["C1","C2","C3"])
+    assert_equal false, board.valid_placement?(cruiser, ["C1","C2"])
+  end
+
+  def test_it_can_place_a_submarine
+    # skip
+    cells = []
+    board = Board.new
+    cell_1 = Cell.new("C1")
+    cells << cell_1
+    cell_2 = Cell.new("C2")
+    cells << cell_2
+
+    computer = Computer.new
+    submarine = Ship.new("Submarine", 2)
+    cruiser = Ship.new("Cruiser", 3)
+
+    assert_equal true, board.valid_placement?(submarine, ["C1","C2"])
+    assert_equal false, board.valid_placement?(submarine, ["C1","C2", "C3"])
+  end
+
+  
 end
