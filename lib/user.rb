@@ -1,10 +1,11 @@
 class User
   attr_reader :board, :cruiser, :submarine
+  attr_accessor :user_ship_count
   def initialize
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-    @start_number_of_ships = 2
+    @user_ship_count = 2
   end
 
   def place_cruiser
