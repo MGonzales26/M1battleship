@@ -5,6 +5,8 @@ require './lib/ship'
 require './lib/board'
 require './lib/turn'
 require './lib/game'
+require './lib/computer'
+require './lib/user'
 
 class GameTest < Minitest::Test
   def test_it_exists
@@ -14,7 +16,7 @@ class GameTest < Minitest::Test
   end
 
   def test_it_can_starts_there_is_a_welcome_message
-    # skip
+     skip
     game = Game.new
 
     game.main_menu
@@ -88,4 +90,19 @@ class GameTest < Minitest::Test
     skip
     game = Game.new
   end
+
+  def test_shot_type_renders_a_ship
+    game = Game.new
+    computer = Computer.new
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    cell_1 = Cell.new("A1")
+    cell_2 = Cell.new("A2")
+    cell_3 = Cell.new("A3")
+
+    game.computer.board.cell.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal "H", game.shot_type("A1")
+  end
+
 end
