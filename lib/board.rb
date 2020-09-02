@@ -32,25 +32,16 @@ class Board
   end
 
   def valid_placement?(ship_type, spots)
-    if overlapping?(spots) == true
-      return false
-    elsif coordinate_equal?(ship_type, spots) && (valid_numbers?(spots) || valid_letters?(spots))
-      return true
-    # elsif !all_letters_same?(spots) && !all_numbers_same?(spots)
-    #   return false
-    else
-      return false
-    end
+    not_overlapping?(spots) &&
+    coordinate_equal?(ship_type, spots) &&
+    (valid_numbers?(spots) || valid_letters?(spots))
   end
 
-  def overlapping?(spots) #WE WANT THIS TO BE FALSE
-    answer = spots.all? do |spot|
+  def not_overlapping?(spots) #WE WANT THIS TO BE FALSE
+    spots.all? do |spot| #all spots are unoccupied
+      # require "pry";binding.pry
       @cells[spot].empty?
     end
-    !answer
-    # require 'pry';binding.pry
-    # @cells.
-    # @cells[coordinate].empty? == @cells[coordinate].ship.empty
   end
 
   def all_letters_same?(spots)
@@ -66,13 +57,13 @@ class Board
   end
 
   def find_digits(spots)
-    digits = spots.map do |spot|
+    spots.map do |spot|
       spot[1].to_i
     end
   end
 
   def find_letters(spots)
-    letters = spots.map do |spot|
+    spots.map do |spot|
       if spot.each_char != Integer
         spot.ord
       end
@@ -110,10 +101,10 @@ class Board
   end
 
   def place(ship_type, spots)
-    something = spots.map do |spot|
+    placement = spots.map do |spot|
       @cells[spot].place_ship(ship_type)
     end
-      something
+    placement
   end
 
   def render(visible=false)
