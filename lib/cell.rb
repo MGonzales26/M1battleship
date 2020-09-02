@@ -20,8 +20,8 @@ class Cell
   end
 
   def fire_upon
-    if ship != nil
-      ship.hit
+    if @ship != nil
+      @ship.hit
     end
     @fired_upon = true
   end
@@ -30,13 +30,13 @@ class Cell
     # require 'pry';binding.pry
     if !empty? && !fired_upon? && visible == true
       "S"
-    elsif !empty? && ship.sunk? #fired_upon? &&
+    elsif !empty? && ship.sunk? && fired_upon?
       "X"
     elsif !empty? && fired_upon?
       "H"
     elsif empty? && fired_upon?
       "M"
-    else  #if empty? || !fired_upon?
+    elsif empty? || !fired_upon?
       "."
     end
   end
