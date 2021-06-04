@@ -23,7 +23,7 @@ class GameTest < Minitest::Test
     user = User.new
     game = Game.new(computer, user)
 
-    game.main_menu
+    # game.main_menu
     assert_equal game.run_game, game.main_menu
   end
 
