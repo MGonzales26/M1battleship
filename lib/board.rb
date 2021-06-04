@@ -12,7 +12,7 @@ class Board
     @rows = (1..(board_size)).to_a
     @columns = ("A"..alphabet[board_size -1]).to_a
     coordinates = @columns.map do |letter|
-      @rows.map do |number|
+        @rows.map do |number|
         letter + number.to_s
       end
     end
@@ -38,7 +38,7 @@ class Board
   end
 
   def not_overlapping?(spots)
-    spots.all? do |spot| 
+    spots.all? do |spot|
       @cells[spot].empty?
     end
   end
@@ -73,6 +73,7 @@ class Board
     set = @rows.each_cons(spots.length).to_a
     check = find_digits(spots).each_cons(spots.length).to_a
     set.any? do |group_element|
+      require 'pry'; binding.pry
       group_element == check.flatten
     end
   end
