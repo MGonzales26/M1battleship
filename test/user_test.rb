@@ -65,7 +65,7 @@ class UserTest < Minitest::Test
   end
 
   def test_it_can_render_the_board_with_a_cruiser
-    # skip
+    skip
     user = User.new
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -76,7 +76,7 @@ class UserTest < Minitest::Test
   end
 
   def test_it_can_render_the_board_with_a_submarine
-    # skip
+    skip
     user = User.new
     board = Board.new
     submarine = Ship.new("Submarine", 2)
