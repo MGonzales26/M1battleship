@@ -83,3 +83,4 @@ class TurnTest < Minitest::Test
     assert_equal nil, turn.computer_shot
     assert_equal turn.user.board.cells[computer_shot].fire_upon
   end
+end
