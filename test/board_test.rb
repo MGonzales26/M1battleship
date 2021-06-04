@@ -258,7 +258,7 @@ class BoardTest < Minitest::Test
     # skip
     board = Board.new
 
-    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
   end
   def test_it_can_render_the_current_board_not_showing_ship
     # skip
@@ -266,7 +266,7 @@ class BoardTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     board.place(cruiser, ["D1", "D2", "D3"])
 
-    assert_equal " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", board.render
   end
 
   def test_it_can_render_a_board_with_a_ship
